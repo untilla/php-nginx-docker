@@ -1,0 +1,21 @@
+version: "2"
+services:
+  nginx:
+    image: nginx:latest
+    container_name: dev_nginx_untilla
+#    restart: always
+    volumes:
+      - ./html:/var/www/html:rw
+      - ./conf:/etc/nginx/conf.d:rw
+      - ./logs:/var/log/nginx:rw
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - php
+  php:
+#    build: ./
+    image: untilla/php7.0-with-dev-modules
+    container_name: dev_php_untilla
+    volumes:
+      - ./html:/var/www/html
