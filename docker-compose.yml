@@ -3,7 +3,6 @@ services:
   nginx:
     image: nginx:latest
     container_name: dev_nginx_untilla
-#    restart: always
     volumes:
       - ./html:/var/www/html:rw
       - ./conf:/etc/nginx/conf.d:rw
