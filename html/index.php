@@ -3,19 +3,18 @@
 class CarrotQuest {
 
     public $app_id = '11183';
-    public $auth_token = "userauthkey-11183-911e02bd31ba75f668ff9360285d190e16675f2225577cb9331f0fb1267814";
+    public $auth_token = "app.11183.425245e5183cc591750dbe682b2753e41275bc41d57b4a88";
 
     private function httpPostRequest($url, $params) {
         $post_data = http_build_query($params);
-        $opts = array('http' =>
-            array(
-                'method'  => 'POST',
-                'header'  => 'Content-type: application/x-www-form-urlencoded',
-                'content' => $post_data
-            )
-        );
-        $context = stream_context_create($opts);
-        $result = file_get_contents($url, false, $context);
+        if (!($curl = curl_init()))
+            return false;
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+        $result = curl_exec($curl);
+        curl_close($curl);
         return $result;
     }
 
